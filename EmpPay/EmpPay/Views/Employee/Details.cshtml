@@ -58,6 +58,31 @@
             @Html.DisplayFor(model => model.ZipCode)
         </dd>
 
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Payrolls)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                @foreach (var item in Model.Payrolls)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.StartTime) </td>
+                        <td> @Html.DisplayFor(modelItem => item.EndTime) </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+
+
+
     </dl>
 </div>
 <p>
