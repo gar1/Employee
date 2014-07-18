@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="48ee5a88e42b4d659eead1e8a2eae84f" Name="Diagram1">
+      <Diagram DiagramId="36e23b1b664f487791fc72dfa14a03ca" Name="Diagram1">
         <EntityTypeShape EntityType="EmployeePayrollModel.Employee" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployeePayrollModel.Payroll" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="EmployeePayrollModel.FK_Payroll_Employee" ManuallyRouted="false" />

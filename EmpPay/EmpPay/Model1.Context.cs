@@ -13,10 +13,10 @@ namespace EmpPay
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class EmployeePayrollEntities : DbContext
+    public partial class EmployeePayrollEntities1 : DbContext
     {
-        public EmployeePayrollEntities()
-            : base("name=EmployeePayrollEntities")
+        public EmployeePayrollEntities1()
+            : base("name=EmployeePayrollEntities1")
         {
         }
     

@@ -28,5 +28,7 @@ namespace EmpPay.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<EmpPay.Employee> Employees { get; set; }
     }
 }

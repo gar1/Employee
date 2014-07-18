@@ -4,49 +4,50 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EmployeePayrollModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="EmployeePayrollModelStoreContainer">
-    <EntitySet Name="Employees" EntityType="EmployeePayrollModel.Store.Employees" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Payrolls" EntityType="EmployeePayrollModel.Store.Payrolls" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Payroll_Employee" Association="EmployeePayrollModel.Store.FK_Payroll_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="Payroll" EntitySet="Payrolls" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Employees">
-    <Key>
-      <PropertyRef Name="EmployeeID" />
-    </Key>
-    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="25" />
-    <Property Name="LastName" Type="varchar" Nullable="false" MaxLength="25" />
-    <Property Name="Address" Type="varchar" Nullable="false" MaxLength="30" />
-    <Property Name="State" Type="char" Nullable="false" MaxLength="2" />
-    <Property Name="City" Type="varchar" Nullable="false" MaxLength="25" />
-    <Property Name="ZipCode" Type="varchar" Nullable="false" MaxLength="10" />
-  </EntityType>
-  <EntityType Name="Payrolls">
-    <Key>
-      <PropertyRef Name="PayrollID" />
-    </Key>
-    <Property Name="PayrollID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EmployeeID" Type="int" Nullable="false" />
-    <Property Name="StartTime" Type="datetime" Nullable="false" />
-    <Property Name="EndTime" Type="datetime" Nullable="false" />
-  </EntityType>
-  <Association Name="FK_Payroll_Employee">
-    <End Role="Employee" Type="EmployeePayrollModel.Store.Employees" Multiplicity="1" />
-    <End Role="Payroll" Type="EmployeePayrollModel.Store.Payrolls" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmployeeID" />
-      </Principal>
-      <Dependent Role="Payroll">
-        <PropertyRef Name="EmployeeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+      <Schema Namespace="EmployeePayrollModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="State" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payrolls">
+          <Key>
+            <PropertyRef Name="PayrollID" />
+          </Key>
+          <Property Name="PayrollID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Payroll_Employee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Payrolls" Type="Self.Payrolls" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Payrolls">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeePayrollModelStoreContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payrolls" EntityType="Self.Payrolls" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Payroll_Employee" Association="Self.FK_Payroll_Employee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Payrolls" EntitySet="Payrolls" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EmployeePayrollModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -61,7 +62,7 @@
           <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="City" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ZipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Payrolls" Relationship="Self.FK_Payroll_Employee" FromRole="Employee" ToRole="Payroll" />
+          <NavigationProperty Name="Payrolls" Relationship="Self.FK_Payroll_Employee" FromRole="Employees" ToRole="Payrolls" />
         </EntityType>
         <EntityType Name="Payroll">
           <Key>
@@ -71,59 +72,60 @@
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Payroll_Employee" FromRole="Payroll" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Payroll_Employee" FromRole="Payrolls" ToRole="Employees" />
         </EntityType>
         <Association Name="FK_Payroll_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Payroll" Type="Self.Payroll" Multiplicity="*" />
+          <End Role="Employees" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Payrolls" Type="Self.Payroll" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Employee">
+            <Principal Role="Employees">
               <PropertyRef Name="EmployeeID" />
             </Principal>
-            <Dependent Role="Payroll">
+            <Dependent Role="Payrolls">
               <PropertyRef Name="EmployeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EmployeePayrollEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EmployeePayrollEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Payrolls" EntityType="Self.Payroll" />
           <AssociationSet Name="FK_Payroll_Employee" Association="Self.FK_Payroll_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Payroll" EntitySet="Payrolls" />
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Payrolls" EntitySet="Payrolls" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="EmployeePayrollModelStoreContainer" CdmEntityContainer="EmployeePayrollEntities">
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="IsTypeOf(EmployeePayrollModel.Employee)">
-        <MappingFragment StoreEntitySet="Employees">
-          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="City" ColumnName="City" />
-          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Payrolls">
-      <EntityTypeMapping TypeName="IsTypeOf(EmployeePayrollModel.Payroll)">
-        <MappingFragment StoreEntitySet="Payrolls">
-          <ScalarProperty Name="PayrollID" ColumnName="PayrollID" />
-          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-  </EntityContainerMapping>
-</Mapping></edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeePayrollModelStoreContainer" CdmEntityContainer="EmployeePayrollEntities1">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EmployeePayrollModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payrolls">
+            <EntityTypeMapping TypeName="EmployeePayrollModel.Payroll">
+              <MappingFragment StoreEntitySet="Payrolls">
+                <ScalarProperty Name="PayrollID" ColumnName="PayrollID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -137,7 +139,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
